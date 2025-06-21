@@ -1,9 +1,68 @@
+
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>My page</title>
-    </head>
-    <body>
-        <h2>hello</h2>
-    </body>
+<head>
+  <title>Input Box Example</title>
+</head>
+<body>
+  <input type="text" id="myInput" placeholder="Enter your name">
+  <button onclick="getValue()">Submit</button>
+
+  <script>
+    function getValue() {
+      const input = document.getElementById("myInput").value;
+      alert("You entered: " + input);
+    }
+  </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Input with Indian Time</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    #time {
+      margin-top: 20px;
+      font-size: 18px;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+  <h3>Enter your name:</h3>
+  <input type="text" id="myInput" placeholder="Your name here">
+  <button onclick="getValue()">Submit</button>
+
+  <p id="output"></p>
+  <p id="time">Indian Time: </p>
+
+  <script>
+    function getValue() {
+      const name = document.getElementById("myInput").value;
+      document.getElementById("output").innerText = "You entered: " + name;
+    }
+
+    function updateIndianTime() {
+      const now = new Date();
+
+      // Convert UTC to IST (UTC + 5:30)
+      const istOffset = 5.5 * 60 * 60 * 1000; // milliseconds
+      const istTime = new Date(now.getTime() + istOffset);
+
+      const timeStr = istTime.toUTCString().slice(17, 25); // HH:MM:SS
+      document.getElementById("time").innerText = "Indian Time: " + timeStr;
+    }
+
+    // Update time every second
+    setInterval(updateIndianTime, 1000);
+    updateIndianTime(); // call once immediately
+  </script>
+
+</body>
 </html>

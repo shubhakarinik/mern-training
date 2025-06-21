@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Alphabet Only Input with Live Time</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    #message {
+      margin-top: 10px;
+      font-size: 18px;
+      color: rgb(93, 153, 202);
+    }
+    #time {
+      margin-top: 20px;
+      font-size: 20px;
+      color: rgb(126, 68, 226);
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Enter Your Name</h2>
+  <input type="text" id="nameInput" placeholder="Your name">
+  <button onclick="validateName()">Submit</button>
+
+  <div id="message"></div>
+  <div id="time"></div>
+
+  <script>
+    function validateName() {
+      const name = document.getElementById("nameInput").value.trim();
+      const messageDiv = document.getElementById("message");
+
+      // Check for alphabets only using regex
+      if (/^[a-zA-Z]+$/.test(name)) {
+        messageDiv.style.color = "green";
+        messageDiv.innerText = "Hello, " + name + "!";
+      } else {
+        messageDiv.style.color = "red";
+        messageDiv.innerText = "Incorrect - Please enter your name.";
+      }
+    }
+
+    function updateIndianTime() {
+      const now = new Date();
+      const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+      const ist = new Date(utc + (5.5 * 60 * 60 * 1000));
+      const timeStr = ist.toLocaleTimeString();
+      document.getElementById("time").innerText = "Indian Time: " + timeStr;
+    }
+
+    setInterval(updateIndianTime, 1000);
+    updateIndianTime();
+  </script>
+
+</body>
+</html>
