@@ -1,0 +1,132 @@
+import React, { useState } from 'react';
+
+function App() {
+  const [formData, setFormData] = useState({ username: '', password: '' });
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    // Restrict password to alphabets and numbers
+    if (name === 'password' && !/^[a-zA-Z0-9]*$/.test(value)) {
+      setErrors((prev) => ({ ...prev, password: 'Only letters and numbers allowed' }));
+      return;
+    }
+
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: '' }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newErrors = {};
+
+    if (!formData.username.trim()) {
+      newErrors.username = 'Username is required';
+    }
+
+    if (!formData.password) {
+      newErrors.password = 'Password is required';
+    } else if (formData.password.length < 8) {
+      newErrors.password = 'Password must be at least 8 characters';
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+    } else {
+      alert(`Welcome, ${formData.username}!`);
+      setFormData({ username: '', password: '' });
+    }
+  };
+
+  return (
+    <div style={styles.container}>
+      <h2 style={{ ...styles.title, color: 'teal' }}>LEARNING REACT !!!</h2>
+      <h3 style={{ ...styles.title, color: 'red' }}>LOGIN !!!</h3>
+      <form onSubmit={handleSubmit} style={styles.form} noValidate>
+        <div style={styles.field}>
+          <input
+            name="username"
+            type="text"
+            placeholder="Username"
+            value={formData.username}
+            onChange={handleChange}
+            style={{ ...styles.input, borderColor: errors.username ? 'red' : '#ccc' }}
+          />
+          {errors.username && <span style={styles.error}>{errors.username}</span>}
+        </div>
+
+        <div style={styles.field}>
+          <input
+            name="password"
+            type="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            style={{ ...styles.input, borderColor: errors.password ? 'red' : '#ccc' }}
+          />
+          {errors.password && <span style={styles.error}>{errors.password}</span>}
+        </div>
+
+        <button type="submit" style={styles.button}>Submit</button>
+      </form>
+    </div>
+  );
+}
+
+const styles = {
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100vh',
+    gap: '16px',
+  },
+  title: {
+    fontSize: '2rem',
+    margin: 0,
+    textAlign: 'center',
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: '12px',
+    width: '300px',
+  },
+  field: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  input: {
+    padding: '8px',
+    fontSize: '16px',
+    width: '100%',
+    border: '1px solid',
+    borderRadius: '4px',
+  },
+  error: {
+    color: 'red',
+    fontSize: '12px',
+    marginTop: '4px',
+  },
+  button: {
+    padding: '10px 20px',
+    fontSize: '16px',
+    cursor: 'pointer',
+  },
+};
+
+export default App;
+
+
+
+
+
+
+
+
+
+
